@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/pages/principal.xhtml">
+		<ui:define name="pag_gestion">
+			<h:panelGrid columns="1">
+				<p:panel header="Estado usuario" toggleable="true" toggleTitle="Minimizar" style="background: #d5d5d5; width:100%">
+					<h:form>
+						<p:growl id="msBanUser" showDetail="true" life="5000"></p:growl> 
+	      				<h:panelGrid columns="1" style="border-style: none; margin: 0 auto;">
+	      					<h:outputText value="Ingrese el nombre de usuario que desea inactivar:"></h:outputText>
+	      					<h:panelGrid columns="2">
+	      						<p:inputText size="20" maxlength="10" value="#{gestionUsuario.varUsuarioFind}"></p:inputText>
+								<p:commandButton value="Buscar" actionListener="#{gestionUsuario.buscarUsuario}" update="@form" resetValues="true" icon="fa fa-search" style="color: #FFFFFF !important; background: #0B6F93 !important; font-family: Arial,Helvetica,sans-serif !important;"/>
+							</h:panelGrid>
+							<p:separator></p:separator>
+							<h:panelGrid columns="2">
+								<h:outputText value="Nombre:"></h:outputText>
+								<h:panelGrid columns="2">
+		      						<p:inputText id="text1" size="40" maxlength="50" value="#{gestionUsuario.varNombreCompleto}" title="Nombre completo del usuario" readonly="true"></p:inputText>
+		      					</h:panelGrid>
+		      					<h:outputText value="Fecha Registro:"></h:outputText>
+		      					<h:panelGrid columns="2">
+		      						<p:inputText id="text2" size="40" maxlength="50" value="#{gestionUsuario.varFechaRegistro}" title="Fecha registro del usuario" readonly="true">
+		      							<f:convertDateTime dateStyle="full" locale="es" timeStyle="long" type="both" />
+		      						</p:inputText>
+		      					</h:panelGrid>
+		      					<h:outputText value="Estado:"></h:outputText>
+		      					<h:panelGrid columns="2">
+		      						<p:inputText id="text3" size="30" maxlength="50" value="#{gestionUsuario.varEstado}" title="Estado del usuario" readonly="true"></p:inputText>
+		      						<p:graphicImage value="#{gestionUsuario.estadoImage}" width="20"/>
+		      					</h:panelGrid>
+							</h:panelGrid>
+							<p:separator></p:separator>
+							<h:panelGrid columns="2" style="margin: 0 auto;">
+								<p:commandButton value="Limpiar pantalla" actionListener="#{gestionUsuario.limpiarPantalla}" update="@form" resetValues="true" icon="fa fa-eraser" styleClass="green"/>		      			
+								<p:commandButton value="#{gestionUsuario.varBotonEstado}" actionListener="#{gestionUsuario.inactivarUsuario}" update="@form" resetValues="true" icon="fa fa-save" styleClass="blue"/>
+							</h:panelGrid>							
+	      				</h:panelGrid>
+					</h:form>
+				</p:panel>
+			</h:panelGrid>
+		</ui:define>
+	</ui:composition>
+
+</html>

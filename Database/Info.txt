@@ -1,0 +1,3 @@
+Para restaurar la base de datos crear una nueva base de datos llamada SIMADB en PostgreSQL,
+usar el rolname de sysadm, luego restaurar la base de datos.
+

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/pages/principal.xhtml">
+		<ui:define name="pag_gestion">
+			<h:form>
+				<p:panel header="Historial Conexión Usuarios" toggleable="true" toggleTitle="Minimizar" style="text-align:left;">
+					<p:growl id="msgListConexiones" showDetail="true" life="2000"></p:growl> 
+      				<h:panelGrid columns="1" style="border-style: none; margin: 0 auto;">
+      					<h:panelGrid columns="8" style="border-style: none; margin: 0 auto;">
+	      					<h:outputText value="Nombre de usuario: "/>
+	      					<p:selectOneMenu id="nameUser" var="user" value="#{consultaHistorial.varUsuario}" filter="true" filterMatchMode="contains" effect="fade">
+	      						<f:selectItem itemLabel="" itemValue=""/>
+	      						<f:selectItems value="#{consultaHistorial.lListaUsuarios}" var="x" itemLabel="#{x.usuario}" itemValue="#{x.usuario}"/>
+	      						<p:column><h:outputText value="#{user.usuario}"/></p:column>
+	      					</p:selectOneMenu>
+	      					<h:outputText value="Fecha inicial: "/>
+	      					<p:calendar id="fechini" value="#{consultaHistorial.varFechaIni}" locale="es" navigator="true" pattern="dd-MM-yyyy" yearRange="c-1:c" effect="fadeIn" effectDuration="100"/>
+	      					<h:outputText value="Fecha final: "/>
+	      					<p:calendar id="fechfin" value="#{consultaHistorial.varFechaFin}" locale="es" navigator="true" pattern="dd-MM-yyyy" yearRange="c-1:c" effect="fadeIn" effectDuration="100"/>
+	      					<h:outputText value=""/>
+	      					<p:commandButton value="Buscar" actionListener="#{consultaHistorial.buscarHistorial}" update="@form" icon="fa fa-search" styleClass="blue"/>
+      					</h:panelGrid>
+      					<p:separator></p:separator>
+<!--       					<p:commandButton value="Refrescar" actionListener="#{consultaHistorial.refrescarPantalla}" update="@form" icon="fa fa-refresh" styleClass="green"/> -->
+      					<p:dataTable id="tabHistorial" var="hist" value="#{consultaHistorial.listaHistorial}" rows="100" paginator="true" emptyMessage="No existen registros" paginatorPosition="bottom" resizableColumns="true">
+      						<p:column headerText="USUARIO" width="15%" style="text-align:center;" filterBy="#{hist.usuario}" filterMatchMode="contains" filterStyle="display:none">
+		      					<h:outputText value="#{hist.usuario}"/>
+		      				</p:column>
+		      				<p:column headerText="NOMBRE" width="30%" style="text-align:left;">
+		      					<h:outputText value="#{hist.nombre}"/>
+		      				</p:column>
+		      				<p:column headerText="IP" width="15%" style="text-align:left;">
+		      					<h:outputText value="#{hist.ip}"/>
+		      				</p:column>
+		      				<p:column headerText="FECHA LOGIN" width="20%" style="text-align:center;">
+		      					<h:outputText value="#{hist.fechaini}"/>
+		      				</p:column>
+		      				<p:column headerText="FECHA LOGOUT" width="20%" style="text-align:center;">
+		      					<h:outputText value="#{hist.fechafin}"/>
+		      				</p:column>		      				
+      					</p:dataTable>
+      				</h:panelGrid>
+	      		</p:panel>				
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</html>

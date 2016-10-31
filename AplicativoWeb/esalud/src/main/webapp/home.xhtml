@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+<f:view contentType="text/html">	
+
+<h:head>
+	<f:facet name="first">
+		<meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+	</f:facet>
+	<h:outputStylesheet library="webjars" name="font-awesome/4.6.3/css/font-awesome-jsf.css"></h:outputStylesheet>
+	<title>eSalud System</title>
+	<style>
+		body {
+			font-size: 12px;
+			background: #eff3f5;
+		}
+		.panel-header {
+			width: 350px !important;
+			height: 350px !important;
+			border-radius: 0px 40px 0px 40px;
+		    -moz-border-radius: 0px 40px 0px 40px;
+		    -webkit-border-radius: 0px 40px 0px 40px;
+		    border: 0px solid #4a4e5e;
+			background: #F7FEFF;
+			box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+		}
+		.ui-widget-header {
+			color:#FFFFFF !important;
+		}
+		.ui-panel .ui-panel-titlebar {
+    		width: 320px;
+    		border-radius: 0px 100px 0px 0px;
+			-moz-border-radius: 0px 100px 0px 0px;
+			-webkit-border-radius: 0px 100px 0px 0px;
+			background: #1b4f86;
+		}
+		.user-input {
+			background-position: left center !important;
+			background-image: url(images/user_.png) !important;
+			background-repeat: no-repeat !important;
+			padding: 5px 5px 5px 20px;
+			width:200px;
+		}
+		.password-input {
+			background-position: left center !important;
+			background-image: url(images/key_.png) !important;
+			background-repeat: no-repeat !important;
+			padding: 5px 5px 5px 20px;
+			width:200px;
+		}
+		.ui-button.ui-state-default.green {
+			color: #FFFFFF !important;
+			background: #54B430 !important;
+			box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.15) !important;
+ 			border: 1px outset #6bd544 !important;
+		}
+		.ui-button.ui-state-hover.green {
+			color: #FFFFFF !important;
+			background: #6bd544 !important;
+			box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.15) !important;
+		}
+	</style>
+	<script type="text/javascript" language="JavaScript">
+		window.onload = function carga() {
+        	var error = '#{request.getParameter("error")}';
+            if(error == 'credenciales') {
+            	error = 'La contraseña es incorrecta, o el usuario que ingreso no existe o está inactivo';
+                document.getElementById("errorSpan").innerHTML = error;
+            }
+        }
+          
+        function datosValidos() {
+        	var usuario = document.getElementById("formLogin:usuario");
+            var password = document.getElementById("formLogin:password");
+            if (password.value == "") {
+            	if (usuario.value == "") {
+                    usuario.focus();
+                    return false;
+                }
+            } else if (usuario.value == "") {
+                usuario.focus();
+                return false;
+            }
+            if (password.value == "") {
+                password.focus();
+                return false;
+            }
+            return true;
+        }
+          
+        function sendData() {
+        	if(datosValidos()) {
+            	var forma = document.getElementById("formLogin");
+                forma.action = "j_spring_security_check";
+                forma.method = "POST";
+                forma.submit();
+            }
+        }
+	</script>	
+</h:head>
+
+<h:body>
+	<h:form id="formLogin">
+		<p:focus for="usuario"/>
+    	<p:growl id="mslogin" showDetail="true" life="2000"></p:growl>	 
+	 	<p:panel header="Sistema de Administración de Información Clínica" styleClass="panel-header" style="margin: 0 auto; position:absolute !important; bottom:0; left:0; right:0; top:15%;" >
+	 		<h:panelGrid columns="1" style="margin: 0 auto;">
+				<h:panelGrid columns="1" style="margin: 0 auto;">
+					<h:graphicImage value="/images/logo-eSalud.png" width="250"/>
+				</h:panelGrid>
+				<p:separator></p:separator>
+				<h:panelGrid columns="1" style="margin: 0 auto; text-align:center;">
+					<h:outputLabel value="Por favor identifíquese para poder acceder al Sistema"/>
+	 				<p:inputText id="usuario" onblur="value=value.toUpperCase()" styleClass="user-input" placeholder="User" required="true" requiredMessage="Debe ingresar un usuario" size="25" maxlength="20"></p:inputText>
+					<p:password id="password" styleClass="password-input" placeholder="Password" required="true" requiredMessage="Debe ingresar la clave" feedback="false" size="25" maxlength="20"/>
+					<!-- <h:outputLabel value="¿Olvidó su contraseña? Ingrese aquí." style="font-size: 10px;"/> -->
+					<h:panelGrid columns="1" style="margin: 0 auto; text-align:center;">
+						<span id="errorSpan" style="color: red; font-weight: bold;"></span>
+					</h:panelGrid>
+				</h:panelGrid>	
+			</h:panelGrid>
+			<h:panelGrid columns="1" style="margin: 0 auto;">			
+				<p:commandButton type="submit" value="Iniciar Sesión" onclick="sendData();" icon="fa fa-sign-in" styleClass="green" ajax="false"/>
+			</h:panelGrid>			
+		</p:panel>
+	</h:form>
+</h:body>
+
+</f:view>
+</html>

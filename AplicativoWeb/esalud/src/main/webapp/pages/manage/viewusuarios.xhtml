@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/pages/principal.xhtml">
+		<ui:define name="pag_gestion">
+			<h:form>
+				<p:panel header="Lista de usuarios" toggleable="true" toggleTitle="Minimizar" style="text-align:left;">
+					<p:growl id="msgListUser" showDetail="true" life="5000"></p:growl> 
+      				<h:panelGrid columns="1" style="border-style: none; margin: 0 auto;">
+      					<p:commandButton value="Refrescar" actionListener="#{consultaUsuario.refrescarPantalla}" update="@form" icon="fa fa-refresh" styleClass="green"/>
+      					<p:dataTable id="tabUsuarios" var="usuarios" value="#{consultaUsuario.listaUsuarios}" rows="20" paginator="true" emptyMessage="No existen usuarios registrados en el sistema" paginatorPosition="bottom" resizableColumns="true" widgetVar="tablaUsuarios">
+      						<f:facet name="header">
+      							<p:outputPanel>
+      								<h:outputText value="Buscar: " />
+      								<p:inputText id="globalFilter" onkeyup="PF('tablaUsuarios').filter()" style="width:150px;" placeholder="Palabra clave"></p:inputText>
+      							</p:outputPanel>
+      						</f:facet>
+      						<p:column headerText="USUARIO" width="10%" style="text-align:left;" filterBy="#{usuarios.userName}" filterMatchMode="contains" filterStyle="display:none">
+		      					<h:outputText value="#{usuarios.userName}"/>
+		      				</p:column>
+      						<p:column headerText="IDENTIFICACION" width="12%" style="text-align:center;" filterBy="#{usuarios.identificacion}" filterMatchMode="contains" filterStyle="display:none">
+		      					<h:outputText value="#{usuarios.identificacion}"/>
+		      				</p:column>
+		      				<p:column headerText="NOMBRE" width="15%" style="text-align:left;">
+		      					<h:outputText value="#{usuarios.nombre}"/>
+		      				</p:column>
+		      				<p:column headerText="APELLIDO" width="15%" style="text-align:left;" filterBy="#{usuarios.apellido}" filterMatchMode="contains" filterStyle="display:none">
+		      					<h:outputText value="#{usuarios.apellido}"/>
+		      				</p:column>
+		      				<p:column headerText="EMAIL" width="25%" style="text-align:left;">
+		      					<h:outputText value="#{usuarios.email}"/>
+		      				</p:column>
+		      				<p:column headerText="ROL" width="13%" style="text-align:left;">
+		      					<h:outputText value="#{usuarios.rol}"/>
+		      				</p:column>
+		      				<p:column headerText="ESTADO" width="5%" style="text-align:center;">
+		      					<h:outputText value="#{usuarios.estado}"/>
+		      				</p:column>
+			      			<p:column headerText="" width="5%" style="text-align:center;">
+			      				<p:commandButton value="" actionListener="#{consultaUsuario.seleccionarUsuario}" process="@this" update=":#{p:component('pgDatosUsuario')}" oncomplete="PF('digActualizacionUsuario').show();" icon="fa fa-edit" style="width:30px; height:15px;">
+	      							<f:attribute name="EDITAR_USUARIO" value="#{usuarios}"></f:attribute>
+	      						</p:commandButton>  
+			      			</p:column>			      				
+      					</p:dataTable>
+      				</h:panelGrid>
+	      		</p:panel>
+   				<p:dialog header="Gestión Usuarios" id="digActualizacionUsuario" widgetVar="digActualizacionUsuario" resizable="false" closeOnEscape="true" dynamic="true">
+   					<p:panel header="Actualizar usuario">
+   						<h:panelGrid columns="2" id="pgDatosUsuario">
+   							<h:outputText value="Usuario ID:"/>
+   							<p:inputText size="20" maxlength="20" value="#{consultaUsuario.usuarioEditar.userName}" readonly="true"></p:inputText>
+   							<h:outputText value="Identificacion:"/>
+   							<p:inputText size="20" maxlength="10" value="#{consultaUsuario.usuarioEditar.identificacion}" readonly="true"></p:inputText>
+   							<h:outputText value="Nombre:"/>
+   							<p:inputText size="20" maxlength="20" value="#{consultaUsuario.usuarioEditar.nombre}"></p:inputText>
+   							<h:outputText value="Apellido:"/>
+   							<p:inputText size="20" maxlength="20" value="#{consultaUsuario.usuarioEditar.apellido}"></p:inputText>
+   							<h:outputText value="Email:"/>
+   							<p:inputText size="20" maxlength="50" value="#{consultaUsuario.usuarioEditar.email}"><p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/></p:inputText>
+   							<h:outputText value="Rol:"/>
+  							<p:selectOneMenu id="tipoRol" var="i" value="#{consultaUsuario.rol}" converter="rolListaConverter" immediate="true">
+			      			  	<f:selectItems value="#{consultaUsuario.rolUsuario}" var="x" itemLabel="#{x.nombre}" itemValue="#{x}"/>
+			      			  	<p:column><h:outputText value="#{i.nombre}"/></p:column>
+			      			</p:selectOneMenu>
+   							<h:outputText value="Estado:"/>
+   							<p:inputSwitch immediate="true" value="#{consultaUsuario.estadoUsuario}" onLabel="Activo" offLabel="Inactivo" style="width:100% !important;"></p:inputSwitch>
+   						</h:panelGrid>
+   						<h:panelGrid columns="1" id="pgBotonActualizar" style="margin: 0 auto;">
+   							<p:commandButton value="Actualizar" icon="fa fa-save" actionListener="#{consultaUsuario.actualizarUsuario}" process=":#{p:component('pgBotonActualizar')}, :#{p:component('pgDatosUsuario')}" update=":#{p:component('tabUsuarios')}, :#{p:component('msgListUser')}" oncomplete="PF('digActualizacionUsuario').hide();" styleClass="blue"></p:commandButton>
+   						</h:panelGrid>
+   					</p:panel>
+	      		</p:dialog>
+      		</h:form>
+		</ui:define>
+	</ui:composition>
+
+</html>

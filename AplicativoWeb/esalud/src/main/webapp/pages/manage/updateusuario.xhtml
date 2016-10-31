@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/pages/principal.xhtml">
+		<ui:define name="pag_gestion">
+			<h:panelGrid columns="1">
+				<p:panel header="Actualizar información del usuario" toggleable="true" toggleTitle="Minimizar" style="background: #d5d5d5; width:100%">
+	      			<h:form>
+						<p:growl id="msActUser" showDetail="true" life="5000"></p:growl> 
+	      				<h:panelGrid columns="1" style="border-style: none; margin: 0 auto;">
+	      					<h:outputText value="Por favor, ingrese un nombre de usuario y presione Buscar"></h:outputText>
+	      					<h:panelGrid columns="2">
+	      						<p:inputText size="20" maxlength="10" value="#{gestionUsuario.varUsuarioFind}"></p:inputText>
+								<p:commandButton value="Buscar" actionListener="#{gestionUsuario.buscarUsuario}" update="@form" resetValues="true" icon="fa fa-search" styleClass="blue"/>
+							</h:panelGrid>
+							<p:separator></p:separator>
+							<h:panelGrid columns="4">
+		      					<h:outputText value="Identificación:"></h:outputText>
+		      					<p:inputText id="text1" maxlength="10" value="#{gestionUsuario.varIdentificacion}" title="Identificación del usuario" readonly="true"></p:inputText>
+		      					<h:outputText value="Nombre:"></h:outputText>
+		      					<p:inputText id="text2" size="40" maxlength="50" value="#{gestionUsuario.varNombreCompleto}" title="Nombre completo del usuario" readonly="true"></p:inputText>
+		      					<h:outputText value="Teléfono:"></h:outputText>
+		      					<p:inputMask id="text3" size="20" maxlength="15" value="#{gestionUsuario.varTelefono}" title="Número de teléfono" mask="0999999999"></p:inputMask>
+		      					<h:outputText value="Email:"></h:outputText>
+		      					<p:inputText id="text4" size="40" maxlength="50" value="#{gestionUsuario.varEmail}" title="Correo electrónico"><p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/></p:inputText>
+		      					<p:separator></p:separator>
+		      					<p:separator></p:separator>
+		      					<p:separator></p:separator>
+		      					<p:separator></p:separator>
+		      					<h:outputText value="Usuario: "> </h:outputText>
+	      						<p:inputText id="text5" size="20" maxlength="20" value="#{gestionUsuario.varUsuarioFind}" title="Nombre de usuario" readonly="true" disabled="true"></p:inputText>
+	      						<h:outputText value="Nueva contraseña: "></h:outputText>
+	      						<p:password id="pwd1" match="pwd2" validatorMessage="Las contraseñas deben coincidir" size="20" maxlength="16" value="#{gestionUsuario.varClaveNew}" title="Clave de acceso" feedback="true" promptLabel="Dificultad" weakLabel="Débil" goodLabel="Medio" strongLabel="Fuerte"></p:password>
+	      						<h:outputText value="Rol: "></h:outputText>
+								<p:selectOneMenu id="roles" var="i" value="#{gestionUsuario.rol}" converter="rolConverter" immediate="true">
+				      			  	<f:selectItems value="#{gestionUsuario.lRol}" var="x" itemLabel="#{x.nombre}" itemValue="#{x}"/>
+				      			  	<p:column><h:outputText value="#{i.nombre}"/></p:column>
+			      				</p:selectOneMenu>
+			      				<h:outputText value="Repetir contraseña: "></h:outputText>
+	      						<p:password id="pwd2" validatorMessage="Las contraseñas deben coincidir" size="20" maxlength="16" value="#{gestionUsuario.varClaveNew}" title="Clave de acceso" feedback="true" promptLabel="Dificultad" weakLabel="Débil" goodLabel="Medio" strongLabel="Fuerte"></p:password>
+	      						<h:outputText value=""></h:outputText>	
+	      						<h:outputText value=""></h:outputText>	
+			      				<h:outputText value=""></h:outputText>			      				
+			      				<h:outputText value="* Dejar el campo vacío para no modificar la clave actual del usuario" style="font-size: 10px;"></h:outputText>
+	      					</h:panelGrid>
+	      					<h:panelGrid columns="1" style="text-align:left;" width="100%">
+	      						<h:outputText value=" El usuario se encuentra #{gestionUsuario.varEstado}" style="color: #1b4f86 !important; font-weight: bold !important;"></h:outputText>
+	      					</h:panelGrid>
+	      					<p:separator></p:separator>
+	      					<h:panelGrid columns="2" style="margin: 0 auto;">
+				      			<p:commandButton value="Limpiar pantalla" actionListener="#{gestionUsuario.limpiarPantalla}" update="@form" resetValues="true" icon="fa fa-eraser" styleClass="green">
+				      				<p:confirm header="Mensaje de confirmación" message="¿Está seguro que desea limpiar el formulario?" icon="fa fa-warning"/>
+				      			</p:commandButton>		      			
+								<p:commandButton value="Actualizar usuario" actionListener="#{gestionUsuario.actualizarUsuario}" update="@form" resetValues="true" icon="fa fa-save" styleClass="blue">
+									<p:confirm header="Mensaje de confirmación" message="¿Está seguro que desea continuar?" icon="fa fa-warning"/>
+								</p:commandButton>
+								<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">					
+									<h:panelGrid columns="2" style="margin: 0 auto;">
+		        						<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" style="color: #FFFFFF !important; background: #1374c3 !important; font-family: Arial,Helvetica,sans-serif !important;" icon="fa fa-check"/>
+		        						<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" style="color: #FFFFFF !important; background: #1374c3 !important; font-family: Arial,Helvetica,sans-serif !important;" icon="fa fa-close"/>
+	        						</h:panelGrid>
+	    						</p:confirmDialog>
+							</h:panelGrid>
+	      				</h:panelGrid>
+					</h:form>
+	      		</p:panel> 	      			
+			</h:panelGrid>
+		</ui:define>
+	</ui:composition>
+
+</html>

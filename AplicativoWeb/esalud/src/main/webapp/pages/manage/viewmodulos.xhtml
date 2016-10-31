@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/pages/principal.xhtml">
+		<ui:define name="pag_gestion">
+			<h:form>
+				<p:panel header="Modulos del sistema" toggleable="true" toggleTitle="Minimizar" style="text-align:left;">
+					<p:growl id="mensaje" showDetail="true" life="3000"></p:growl>
+					<h:panelGrid columns="1" style="border-style: none; margin: 0 auto;">
+						<h:panelGrid columns="2">
+							<p:commandButton value="Refrescar" actionListener="#{gestionModulo.refrescarPantalla}" update="@form" icon="fa fa-refresh" styleClass="green"/>
+							<p:commandButton value="Nuevo Módulo" onclick="PF('digInsertar').show();" update=":#{p:component('pgInsertar')}" icon="fa fa-plus" styleClass="blue"/>
+						</h:panelGrid>
+						<p:dataTable id="datosTabla" var="lista" value="#{gestionModulo.listaModulos}" rows="20" paginator="true" emptyMessage="No se encontraron módulos en el sistema" paginatorPosition="bottom" resizableColumns="true" widgetVar="tablaModulos">
+							<p:column headerText="MÓDULO" width="15%" style="text-align:left;">
+		      					<h:outputText value="#{lista.nombre}"/>
+		      				</p:column>
+							<p:column headerText="DESCRIPCION" width="30%" style="text-align:left;">
+		      					<h:outputText value="#{lista.descripcion}"/>
+		      				</p:column>
+		      				<p:column headerText="FECHA CREACION" width="22%" style="text-align:center;">
+		      					<h:outputText value="#{lista.fechacreacion}"><f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" /></h:outputText>
+		      				</p:column>
+		      				<p:column headerText="USUARIO CREACION" width="15%" style="text-align:left;">
+		      					<h:outputText value="#{lista.usuariocreacion}"/>
+		      				</p:column>
+		      				<p:column headerText="ESTADO" width="10%" style="text-align:center;">
+		      					<h:outputText value="#{lista.estado}"/>
+		      				</p:column>
+		      				<p:column headerText="" width="8%" style="text-align:center;">
+			      				<p:commandButton value="" actionListener="#{gestionModulo.seleccionarModulo}" process="@this" update=":#{p:component('pgDatosUpdate')}" oncomplete="PF('digActualizar').show();" icon="fa fa-edit" style="width:30px; height:15px;">
+	      							<f:attribute name="EDITAR_SELECCION" value="#{lista}"></f:attribute>
+	      						</p:commandButton>  
+			      			</p:column>	
+						</p:dataTable>
+					</h:panelGrid>
+				</p:panel>
+				<p:dialog header="Gestión módulos" id="digActualizar" widgetVar="digActualizar" resizable="false" closeOnEscape="true" dynamic="true">
+   					<p:panel id="update" header="Actualizar módulo">
+   						<h:panelGrid columns="2" id="pgDatosUpdate">
+   							<h:outputText value="Módulo:"/>
+   							<p:inputText size="20" maxlength="20" value="#{gestionModulo.modulo.nombre}"></p:inputText>
+   							<h:outputText value="Descripcion:"/>
+   							<p:inputText size="50" maxlength="50" value="#{gestionModulo.modulo.descripcion}"></p:inputText>
+   							<h:outputText value="Estado:"/>
+   							<p:inputSwitch immediate="true" value="#{gestionModulo.estadoModulo}" onLabel="Activo" offLabel="Inactivo" style="width:100% !important;"></p:inputSwitch>
+   						</h:panelGrid>
+   						<h:panelGrid columns="1" id="pgBotonActualizar" style="margin: 0 auto;">
+   							<p:commandButton value="Actualizar" icon="fa fa-save" actionListener="#{gestionModulo.actualizarModulo}" process=":#{p:component('pgBotonActualizar')}, :#{p:component('pgDatosUpdate')}" update=":#{p:component('datosTabla')}, :#{p:component('mensaje')}" oncomplete="PF('digActualizar').hide();" styleClass="blue"></p:commandButton>
+   						</h:panelGrid>
+   					</p:panel>
+   				</p:dialog>
+   				<p:dialog header="Gestión módulos" id="digInsertar" widgetVar="digInsertar" resizable="false" closeOnEscape="true">
+   					<p:panel id="new" header="Ingresar nuevo módulo">
+   						<h:panelGrid columns="3" id="pgInsertar">
+							<h:outputText value="Nombre: "></h:outputText>
+	   						<p:outputLabel style="color: red !important;">*</p:outputLabel>
+	   						<p:inputText size="20" maxlength="20" value="#{gestionModulo.varNombre}"></p:inputText>
+	   						<h:outputText value="Descripción: "></h:outputText>
+	   						<p:outputLabel style="color: red !important;">*</p:outputLabel>
+	   						<p:inputText size="50" maxlength="50" value="#{gestionModulo.varDescripcion}"></p:inputText>
+	   						<h:outputText value=""></h:outputText>
+	   						<h:outputText value=""></h:outputText>
+	   						<h:outputText value="Los campos con (*) son obligatorios" style="font-size: 10px !important;"></h:outputText>   						
+   						</h:panelGrid>
+   						<p:separator></p:separator>
+   						<h:panelGrid columns="1" id="pgBotonIngresar" style="margin: 0 auto;">
+	   						<p:commandButton value="Registrar nuevo rol" icon="fa fa-save" actionListener="#{gestionModulo.ingresarModulo}" process=":#{p:component('pgBotonIngresar')}, :#{p:component('pgInsertar')}" update=":#{p:component('datosTabla')}, :#{p:component('mensaje')}" oncomplete="PF('digInsertar').hide();" styleClass="blue"></p:commandButton>
+	   					</h:panelGrid>
+   					</p:panel>
+   				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</html>

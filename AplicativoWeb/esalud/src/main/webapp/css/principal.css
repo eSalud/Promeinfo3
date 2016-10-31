@@ -1,0 +1,107 @@
+
+body {
+	font-size: 12px;
+}
+
+.cabeceraStyle .ui-layout-unit-content { 			
+	background: #C0E3EB !important;
+} 
+
+.ui-layout-unit-header {
+	background: rgba(14,86,153,1);
+	background: -moz-linear-gradient(top, rgba(14,86,153,1) 0%, rgba(27,79,134,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(14,86,153,1)), color-stop(100%, rgba(27,79,134,1)));
+	background: -webkit-linear-gradient(top, rgba(14,86,153,1) 0%, rgba(27,79,134,1) 100%);
+	background: -o-linear-gradient(top, rgba(14,86,153,1) 0%, rgba(27,79,134,1) 100%);
+	background: -ms-linear-gradient(top, rgba(14,86,153,1) 0%, rgba(27,79,134,1) 100%);
+	background: linear-gradient(to bottom, rgba(14,86,153,1) 0%, rgba(27,79,134,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e5699', endColorstr='#1b4f86', GradientType=0 );
+	}
+	
+.ui-widget-content {
+	background: #FFFFFF !important;
+}
+
+.ui-widget-header {
+	color:#FFFFFF !important;
+}
+
+.ui-dialog .ui-dialog-title {
+	font-size: 14px !important;
+	margin:.3em 2px .1em 0 !important;
+}
+
+.ui-widget-header .ui-state-default {
+	text-shadow:none !important;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	padding:.2em .4em .2em 1em !important;
+	position:relative !important;
+	border:0 !important;
+}
+
+.ui-dialog.ui-widget-content .ui-dialog-titlebar-close {
+	margin-top:4px !important;
+}
+
+.ui-panel-content {
+	background: #eff3f5 !important;
+}
+
+.ui-button .ui-button-text {
+	font-size: 12px !important;
+	font-family: Arial,Helvetica,sans-serif !important;
+	color: #FFFFFF !important;
+	text-shadow: none !important;
+}
+
+.ui-button.ui-state-default.green {
+	color: #FFFFFF !important;
+	background: #54B430 !important;
+	box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.15) !important;
+		border: 1px outset #6bd544 !important;
+}
+
+.ui-button.ui-state-hover.green {
+	color: #FFFFFF !important;
+	background: #6bd544 !important;
+	box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.15) !important;
+}
+
+.ui-button.ui-state-default.red {
+	color: #FFFFFF !important;
+	background: #cf1212 !important;
+	box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.15) !important;
+		border: 1px outset #FFFFFF !important;
+}
+
+.ui-button.ui-state-hover.red {
+	color: #FFFFFF !important;
+	background: #d2524f !important;
+	box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.15) !important;
+}
+
+.ui-button.ui-state-default.blue {
+	color: #FFFFFF !important;
+	background: #1374c3 !important;
+	box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.15) !important;
+		border: 1px outset #FFFFFF !important;
+}
+
+.ui-button.ui-state-hover.blue {
+	color: #FFFFFF !important;
+	background: #26a3db !important;
+	box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.15) !important;
+}	
+	
+.ui-widget-header {
+	background: rgba(14,86,153,1);
+	background: -moz-linear-gradient(top, rgba(14,86,153,1) 0%, rgba(27,79,134,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(14,86,153,1)), color-stop(100%, rgba(27,79,134,1)));
+	background: -webkit-linear-gradient(top, rgba(14,86,153,1) 0%, rgba(27,79,134,1) 100%);
+	background: -o-linear-gradient(top, rgba(14,86,153,1) 0%, rgba(27,79,134,1) 100%);
+	background: -ms-linear-gradient(top, rgba(14,86,153,1) 0%, rgba(27,79,134,1) 100%);
+	background: linear-gradient(to bottom, rgba(14,86,153,1) 0%, rgba(27,79,134,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e5699', endColorstr='#1b4f86', GradientType=0 );
+}

@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/pages/principal.xhtml">
+    	<ui:define name="pag_gestion">
+	
+		<script type="text/javascript">
+		PrimeFaces.locales['es'] = {
+	              closeText: 'Cerrar',
+	              prevText: 'Anterior',
+	              nextText: 'Siguiente',
+	              monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+	              monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+	              dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+	              dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+	              dayNamesMin: ['D','L','M','M','J','V','S'],
+	              weekHeader: 'Semana',
+	              firstDay: 1,
+	              isRTL: false,
+	              showMonthAfterYear: false,
+	              yearSuffix: '',
+	              timeOnlyTitle: 'Sólo hora',
+	              timeText: 'Tiempo',
+	              hourText: 'Hora',
+	              minuteText: 'Minuto',
+	              secondText: 'Segundo',
+	              currentText: 'Fecha actual',
+	              ampm: false,
+	              month: 'Mes',
+	              week: 'Semana',
+	              day: 'Día',
+	              allDayText : 'Todo el día'
+	      };
+		</script>
+
+      	<h:panelGrid columns="1">
+      		<p:panel header="Registrar un nuevo usuario" toggleable="true" toggleTitle="Minimizar">
+      			<h:form>
+        		<p:growl id="msIngUser" showDetail="true" life="5000"></p:growl> 
+	      		<h:panelGrid columns="6" style="border-style: none; margin: 0 auto;">
+	      			<h:outputText value="Identificación:"></h:outputText>
+	      			<p:outputLabel style="color: red !important;">*</p:outputLabel>
+	      			<p:inputText size="20" maxlength="10" value="#{newUser.persona.cedula}" required="true" requiredMessage="Debe ingresar la identificación"></p:inputText>
+	      			<h:outputText value="Tipo identificación:"></h:outputText>
+	      			<p:outputLabel style="color: red !important;"></p:outputLabel>
+	      			<p:selectOneMenu id="tipoIdUser" var="idUser" value="#{newUser.tipoIdenticacion}" converter="identificacionConverter">
+	      			  <f:selectItems value="#{newUser.listaTipoIden}" var="selectId" itemLabel="#{selectId.descripcion}" itemValue="#{selectId}"/>
+	      			  <p:column><h:outputText value="#{idUser.descripcion}"/></p:column>
+	      			</p:selectOneMenu>
+	      			<h:outputText id="t1" value="Primer nombre:"></h:outputText>
+	      			<p:outputLabel style="color: red !important;">*</p:outputLabel>
+	      			<p:inputText size="30" maxlength="30" value="#{newUser.varNombreUno}" required="true" requiredMessage="Debe ingresar el primer nombre"></p:inputText>
+	      			<h:outputText value="Segundo nombre:"></h:outputText>
+	      			<p:outputLabel style="color: red !important;"></p:outputLabel>
+	      			<p:inputText size="30" maxlength="30" value="#{newUser.varNombreDos}"></p:inputText>
+	      			<h:outputText value="Primer apellido:"></h:outputText>
+	      			<p:outputLabel style="color: red !important;">*</p:outputLabel>
+	      			<p:inputText size="30" maxlength="30" value="#{newUser.varApellidoUno}" required="true" requiredMessage="Debe ingresar el primer apellido"></p:inputText>
+	      			<h:outputText value="Segundo apellido:"></h:outputText>
+	      			<p:outputLabel style="color: red !important;"></p:outputLabel>
+	      			<p:inputText size="30" maxlength="30" value="#{newUser.varApellidoDos}"></p:inputText>	      			
+	      			<h:outputText value="Fecha de Nacimiento:"></h:outputText>
+	      			<p:outputLabel style="color: red !important;"></p:outputLabel>
+	      			<p:calendar id="german" value="#{newUser.persona.fechanacimiento}" locale="es" navigator="true" pattern="dd-MM-yyyy" yearRange="c-80:c" effect="fadeIn" effectDuration="100"/>
+	      			<h:outputText value="Ocupación:"></h:outputText>
+	      			<p:outputLabel style="color: red !important;"></p:outputLabel>
+	      			<p:inputText size="30" maxlength="50" value="#{newUser.persona.ocupacion}"></p:inputText>
+	      			<h:outputText value="Teléfono:"></h:outputText>
+	      			<p:outputLabel style="color: red !important;">*</p:outputLabel>
+	      			<p:inputMask size="30" maxlength="20" value="#{newUser.persona.celular}" required="true" requiredMessage="Debe ingresar un número de teléfono" mask="0999999999"></p:inputMask>
+	      			<h:outputText value="Email:"></h:outputText>
+	      			<p:outputLabel style="color: red !important;">*</p:outputLabel>	
+	      			<p:inputText size="30" maxlength="200" value="#{newUser.persona.email}" required="true" requiredMessage="Debe ingresar un email"><p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/></p:inputText>
+	      			<h:outputText value="Estado Civil:"> </h:outputText>
+	      			<p:outputLabel style="color: red !important;"></p:outputLabel>
+	      			<p:selectOneMenu id="tipoEstCiv" var="estCiv" value="#{newUser.estadoCivil}" converter="estadoCivilConverter">
+	      			  <f:selectItems value="#{newUser.listaTipoEstCivil}" var="selectEstCiv" itemLabel="#{selectEstCiv.descripcion}" itemValue="#{selectEstCiv}"/>
+	      			  <p:column><h:outputText value="#{estCiv.descripcion}"/></p:column>
+	      			</p:selectOneMenu>
+	      			<h:outputText value="Sexo:"> </h:outputText>
+	      			<p:outputLabel style="color: red !important;"></p:outputLabel>
+	      			<p:selectOneMenu id="tipoSex" var="sex" value="#{newUser.sexo}" converter="sexoConverter">
+	      			  <f:selectItems value="#{newUser.listaTipoSexo}" var="selectSex" itemLabel="#{selectSex.descripcion}" itemValue="#{selectSex}"/>
+	      			  <p:column><h:outputText value="#{sex.descripcion}"/></p:column>
+	      			</p:selectOneMenu>
+	      			<p:separator></p:separator>
+	      			<p:separator></p:separator>
+	      			<p:separator></p:separator>
+	      			<p:separator></p:separator>
+	      			<p:separator></p:separator>
+	      			<p:separator></p:separator>
+	      			<h:outputText value="Usuario: "> </h:outputText>
+	      			<p:outputLabel style="color: red !important;">*</p:outputLabel>
+	      			<p:inputText size="30" maxlength="20" value="#{newUser.varUsuario}" required="true" requiredMessage="Debe ingresar el usuario"></p:inputText>
+	      			<h:outputText value="Contraseña: "></h:outputText>
+	      			<p:outputLabel style="color: red !important;">*</p:outputLabel>
+	      			<p:password id="pwd1" match="pwd2" validatorMessage="Las contraseñas deben coincidir" size="30" maxlength="16" value="#{newUser.varClave}" required="true" requiredMessage="Debe ingresar la clave" feedback="true" promptLabel="Dificultad" weakLabel="Débil" goodLabel="Medio" strongLabel="Fuerte"></p:password>
+	      			<h:outputText value="Rol de usuario: "></h:outputText>
+	      			<p:outputLabel style="color: red !important;"></p:outputLabel>
+	      			<p:selectOneMenu id="tipoRol" var="rol" value="#{newUser.rol}" converter="rolConverterNew">
+	      			  <f:selectItems value="#{newUser.listaRolUser}" var="selectRol" itemLabel="#{selectRol.nombre}" itemValue="#{selectRol}"/>
+	      			  <p:column><h:outputText value="#{rol.nombre}"/></p:column>
+	      			</p:selectOneMenu>
+	      			<h:outputText value="Repetir contraseña: "></h:outputText>
+	      			<p:outputLabel style="color: red !important;">*</p:outputLabel>
+	      			<p:password id="pwd2" validatorMessage="Las contraseñas deben coincidir" size="30" maxlength="16" value="#{newUser.varClave}" required="true" requiredMessage="Debe ingresar la clave" feedback="true" promptLabel="Dificultad" weakLabel="Débil" goodLabel="Medio" strongLabel="Fuerte"></p:password>
+	      		</h:panelGrid>
+	      		<h:panelGrid columns="1" style="margin: 0 auto; border: 1px; width:100%; text-align:right;">
+	      			<p:separator></p:separator>
+	      			<h:outputText value="Los campos con (*) son obligatorios" style="font-size: 10px !important;"></h:outputText>
+	      		</h:panelGrid>
+	      		<h:panelGrid columns="4" style="margin: 0 auto;">
+	      			<p:commandButton value="Limpiar pantalla" actionListener="#{newUser.limpiarPantalla}" update="@form" resetValues="true" icon="fa fa-eraser" styleClass="green" immediate="true">
+	      				<p:confirm header="Mensaje de confirmación" message="¿Está seguro que desea limpiar el formulario?" icon="fa fa-warning"/>
+	      			</p:commandButton>
+	      			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">					
+						<h:panelGrid columns="2" style="margin: 0 auto;">
+        					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" style="color: #FFFFFF !important; background: #1374c3 !important; font-family: Arial,Helvetica,sans-serif !important;" icon="fa fa-check"/>
+        					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" style="color: #FFFFFF !important; background: #1374c3 !important; font-family: Arial,Helvetica,sans-serif !important;" icon="fa fa-close"/>
+        				</h:panelGrid>
+    				</p:confirmDialog>
+					<p:commandButton value="Registrar usuario" actionListener="#{newUser.nuevoUsuario}" update="@form" resetValues="true" icon="fa fa-save" styleClass="blue">					    
+						<p:confirm header="Mensaje de confirmación" message="¿Está seguro que desea continuar?" icon="fa fa-warning"/>
+					</p:commandButton>
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">					
+						<h:panelGrid columns="2" style="margin: 0 auto;">
+        					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" style="color: #FFFFFF !important; background: #1374c3 !important; font-family: Arial,Helvetica,sans-serif !important;" icon="fa fa-check"/>
+        					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" style="color: #FFFFFF !important; background: #1374c3 !important; font-family: Arial,Helvetica,sans-serif !important;" icon="fa fa-close"/>
+        				</h:panelGrid>
+    				</p:confirmDialog>
+				</h:panelGrid>
+				</h:form>
+      		</p:panel>  
+      	</h:panelGrid>      	           	         
+
+	</ui:define> 
+	</ui:composition>
+
+</html>
